@@ -10,9 +10,9 @@ function d($s) {
 	print "</pre>";
 }
 
-require_once '../lib/Umberi/Translator/Tokenizer.php';
+require_once '../lib/Umberi/Translator/Collector.php';
 
-use Umberi\Translator\Tokenizer;
+use Umberi\Translator\Collector;
 
 //d(token_name(315));
 function parse($filename) {
@@ -56,11 +56,11 @@ function parse($filename) {
 	}
 }
 /*
-Tokenizer::addFn('_');
-Tokenizer::addFn('t');
-Tokenizer::addFn('translate');
+Collector::addFn('_');
+Collector::addFn('t');
+Collector::addFn('translate');
 
-Tokenizer::process(__FILE__);
+Collector::process(__FILE__);
 */
 /*$t = Translator::setInstance(__DIR__ . DIRECTORY_SEPARATOR . 'langs', 'en-US', array(
 	'prod' => false,
@@ -95,13 +95,13 @@ function scan($code) {
 }
 scan(file_get_contents(__FILE__));
 
-$tokenizer = new Tokenizer;
+$collector = new Collector;
 
-$tokenizer
-  ->addFunction('__', Tokenizer::TYPE_FUNCTION)
+$collector
+  ->addFunction('translate', Collector::TYPE_METHOD)
   ->scan(file_get_contents(__FILE__));
 /*
-$tokenizer
+$collector
   ->addFunction('__')
   ->addMethod(null, '_')
   ->addMethod('$translator', 'translate')
@@ -111,7 +111,7 @@ $tokenizer
 
   ->addFunc('_')
   ->addFunc('t')
-  ->addFunc('translate', 1, Tokenizer::SMTHD)
+  ->addFunc('translate', 1, Collector::SMTHD)
 // scan
   ->scan(file_get_contents(__FILE__));*/
 

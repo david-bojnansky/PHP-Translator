@@ -154,3 +154,63 @@
 			 *   Lorem Ipsum
 			 */
 			//list($tok, $code) = $toks[ $di ];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
+				/**
+				 * Lorem Ipsum
+				 *
+				 * @var int
+				 */
+				$j = $i;
+
+
+
+				/**
+				 * @var array|int $rule
+				 *   Lorem Ipsum
+				 */
+				foreach ($func['rules'] as $rule) {
+					/**
+					 * Lorem Ipsum
+					 *
+					 * @var array
+					 */
+					$tok = $getTok($j);
+
+					$continue = false;
+					$j++;
+					if (empty($tok)) {
+						break 2; // ???
+					}
+					if (is_array($rule) && $rule[0] == $tok[0] && preg_match("~^$rule[1]$~ADi", $tok[1]) || $rule == $tok[0]) {
+						$continue = true;
+						continue;
+					}		
+					// Pokračovať ďalšou funkciou.
+					continue 2;
+				}
+				if ($continue) {
+					/**
+					 * Lorem Ipsum
+					 *
+					 * @var int
+					 */
+					$msgAt = $func['msgAt'];
+
+					break;
+				}
