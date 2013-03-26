@@ -1,0 +1,156 @@
+
+		// delete {
+			if ($tok == T_STRING) {
+				/**
+				 * @var array $func
+				 *   Lorem Ipsum
+				 */
+				foreach ($this->funcs as $func) {
+					if (is_int($func['toks'][0]) || !preg_match("~^{$func['name']}$~ADi", $code)) {
+						continue;
+					}
+
+					/**
+					 * Lorem Ipsum
+					 *
+					 * @var int
+					 */
+					$i = $di;
+
+					do {
+						if (!array_key_exists(++$i, $toks)) {
+							break 2;
+						}
+						if ($toks[ $i ][0] == T_COMMENT) {
+							$si = $di = $i;
+							continue;
+						}
+						if ($func['toks'][2] == $toks[ $i ][0] && $toks[ $i ][1] == '(') {
+							$continue = true;
+							$si = $di = $i;
+							break;
+						}
+						break 2;
+					} while (true);
+
+				}
+			} else {
+				/**
+				 * @var array $func
+				 *   Lorem Ipsum
+				 */
+				foreach ($this->funcs as $func) {
+					if (is_null($func['toks'][0])) {
+						continue;
+					}
+
+				}
+			}
+		// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				/**
+				 *
+				 */
+				/*for ($i = 0, $inc = true, $_di = $di ; $i < count($func['rules']) ; !$inc ?: $i++, $_di++) {
+					if (is_array($rule) && $rule[0] == $toks[ $_di ][0] && preg_match("~^$rule[1]$~ADi", $toks[ $_di ][1])) {
+						break;
+					}
+				}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				/**
+			 *
+			 */
+			foreach ($this->funcs as $func) {
+				if ($tok == T_STRING && is_int($func['toks'][0])) {
+					continue;
+				}
+				if ($tok == T_OBJECT_OPERATOR && is_null($func['toks'][0])) {
+					continue;
+				}
+				if ($tok == T_DOUBLE_COLON && is_null($func['toks'][0])) {
+					continue;
+				}
+
+				/**
+				 *
+				 */
+				for ($n = $i ; $n < $count ; $n++) {
+
+				}
+
+				if ($tok == T_SRTRING && is_null($func['toks'][0])) {
+					if ($func['toks'][1] != $toks[ $i + 0 ][0] || !preg_match("~^{$func['name']}$~ADi", $con)) {
+						continue;
+					}
+					if ($func['toks'][2] != $toks[ $i + 1 ][0] || $toks[ $i + 2 ][1] != '(') {
+						continue;
+					}
+				} elseif ($tok == T_OBJECT_OPERATOR || $tok == T_DOUBLE_COLON) {
+					if ($func['toks'][0] != $tok) {
+						continue;
+					}
+					if ($func['toks'][1] != $toks[ $i + 1 ][0] || !preg_match("~^{$func['name']}$~ADi", $con)) {
+						continue;
+					}
+					if ($func['toks'][2] != $toks[ $i + 2 ][0] || $toks[ $i + 2 ][1] != '(') {
+						continue;
+					}
+				}
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						/**
+			 * @var int $tok
+			 *   Lorem Ipsum
+			 * @var string $code
+			 *   Lorem Ipsum
+			 */
+			//list($tok, $code) = $toks[ $di ];
