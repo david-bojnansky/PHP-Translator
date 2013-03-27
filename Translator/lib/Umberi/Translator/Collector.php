@@ -39,6 +39,13 @@ final class Collector {
 
 	/**
 	 * Lorem Ipsum
+	 *
+	 * @var array
+	 */
+	private $msgs = array();
+
+	/**
+	 * Lorem Ipsum
 	 */
 	public function __construct() {
 	}
@@ -79,83 +86,12 @@ final class Collector {
 	/**
 	 * Lorem Ipsum
 	 *
-	 * @param string $src
+	 * @param string $file
 	 *   Lorem Ipsum
 	 * @return array
 	 *   Lorem Ipsum
 	 */
-	public function scanOLD($src) {
-		/**
-		 * Lorem Ipsum
-		 *
-		 * @var array
-		 */
-		$toks = token_get_all($src);
-
-		/**
-		 *
-		 */
-
-
-		/**
-		 * @var int $si
-		 *   Lorem Ipsum
-		 * @var int $di
-		 *   Lorem Ipsum
-		 */
-		for ($si = $di = 0 ; $si < count($toks) ; $si++, $di = $si) {
-			if (is_array($toks)) {
-				/**
-				 * @var int $tok
-				 *   Lorem Ipsum
-				 * @var string $content
-				 *   Lorem Ipsum
-				 * @var int $line
-				 *   Lorem Ipsum
-				 */
-				list($tok, $content, $line) = $toks[ $di ];
-
-				if ($tok == T_WHITESPACE || $tok == T_COMMENT || $tok == T_DOC_COMMENT) {
-					continue;
-				}
-			} else {
-				/**
-				 * Lorem Ipsum
-				 *
-				 * @var string
-				 */
-				$tok = $toks[ $di ];
-			}
-			/*if () {
-
-			}*/
-			/**
-			 * @var array $func
-			 *   Lorem Ipsum
-			 */
-			foreach ($this->funcs as $func) {
-				if ($func['toks'][0] != $toks[ $di ]) {
-					continue;
-				}
-				if ($func['toks'][1]) {
-
-				}
-				if ($func['toks'][2]) {
-
-				}
-			}
-		}
-	}
-
-	/**
-	 * Lorem Ipsum
-	 *
-	 * @param string $src
-	 *   Lorem Ipsum
-	 * @return array
-	 *   Lorem Ipsum
-	 */
-	public function scan($src) {
+	public function scan($file) {
 		if (empty($this->funcs)) {
 			// TODO: ERROR
 		}
@@ -165,14 +101,14 @@ final class Collector {
 		 *
 		 * @var array
 		 */
-		$toks = $this->tokenize($src);
+		$toks = $this->tokenize(file_get_contents($file));
 
 		/**
 		 * Lorem Ipsum
 		 *
 		 * @var array
 		 */
-		$illegalToks = array(
+		$illegalStrToks = array(
 			'false',
 			'null',
 			'parent',
@@ -253,10 +189,10 @@ final class Collector {
 		 *   Lorem Ipsum
 		 */
 		for ($i = 0 ; isset($toks[ $i ]) ; $i++) {
-			if ($toks[ $i ][0] != T_STRING && $toks[ $i ][0] != T_COMMENT) {
+			if ($toks[ $i ][0] != T_STRING && $toks[ $i ][0] != T_CONSTANT_ENCAPSED_STRING) {
 				continue;
 			}
-			if ($toks[ $i ][0] == T_STRING && in_array($toks[ $i ][1], $illegalToks)) {
+			if ($toks[ $i ][0] == T_STRING && in_array($toks[ $i ][1], $illegalStrToks)) {
 				continue;
 			}
 
@@ -270,11 +206,7 @@ final class Collector {
 			if (empty($nextTok)) {
 				break;
 			}
-			if ($toks[ $i ][0] == T_STRING) {
-				if ($nextTok[1] != '(') {
-					continue;
-				}
-			} elseif ($toks[ $i ][0] == T_COMMENT) {
+			if ($toks[ $i ][0] == T_STRING ? $nextTok[1] != '(' : $nextTok[1] != ')') {
 				continue;
 			}
 
@@ -284,6 +216,20 @@ final class Collector {
 			 * @var array
 			 */
 			$prevTok = $getPrevTok($i);
+
+			if ($toks[ $i ][0] == T_CONSTANT_ENCAPSED_STRING) {
+				$i++;
+				if (empty($prevTok) || $prevTok[1] != '(') {
+					continue;
+				}
+				$this->msgs[] = array(
+					'type' => substr($toks[ $i ][1], 0,  1),
+					'msg'  => substr($toks[ $i ][1], 1, -1),
+					'file' => $file,
+					'line' => $toks[ $i ][2],
+				);
+				continue;
+			}
 
 			/**
 			 * Lorem Ipsum

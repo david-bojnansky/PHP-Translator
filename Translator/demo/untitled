@@ -214,3 +214,91 @@
 
 					break;
 				}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				/**
+	 * Lorem Ipsum
+	 *
+	 * @param string $src
+	 *   Lorem Ipsum
+	 * @return array
+	 *   Lorem Ipsum
+	 */
+	public function scanOLD($src) {
+		/**
+		 * Lorem Ipsum
+		 *
+		 * @var array
+		 */
+		$toks = token_get_all($src);
+
+		/**
+		 *
+		 */
+
+
+		/**
+		 * @var int $si
+		 *   Lorem Ipsum
+		 * @var int $di
+		 *   Lorem Ipsum
+		 */
+		for ($si = $di = 0 ; $si < count($toks) ; $si++, $di = $si) {
+			if (is_array($toks)) {
+				/**
+				 * @var int $tok
+				 *   Lorem Ipsum
+				 * @var string $content
+				 *   Lorem Ipsum
+				 * @var int $line
+				 *   Lorem Ipsum
+				 */
+				list($tok, $content, $line) = $toks[ $di ];
+
+				if ($tok == T_WHITESPACE || $tok == T_COMMENT || $tok == T_DOC_COMMENT) {
+					continue;
+				}
+			} else {
+				/**
+				 * Lorem Ipsum
+				 *
+				 * @var string
+				 */
+				$tok = $toks[ $di ];
+			}
+			/*if () {
+
+			}*/
+			/**
+			 * @var array $func
+			 *   Lorem Ipsum
+			 */
+			foreach ($this->funcs as $func) {
+				if ($func['toks'][0] != $toks[ $di ]) {
+					continue;
+				}
+				if ($func['toks'][1]) {
+
+				}
+				if ($func['toks'][2]) {
+
+				}
+			}
+		}
+	}

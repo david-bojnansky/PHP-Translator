@@ -99,7 +99,7 @@ $collector = new Collector;
 
 $collector
   ->addFunction('translate', Collector::TYPE_METHOD)
-  ->scan(file_get_contents(__FILE__));
+  ->scan(__FILE__);
 /*
 $collector
   ->addFunction('__')
