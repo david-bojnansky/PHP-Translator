@@ -232,6 +232,15 @@ final class Collector {
 				if (empty($prevTok) || $prevTok[1] != '(') {
 					continue;
 				}
+				$prevTok = $getPrevTok($i, true, 1);
+				if (!empty($prevTok)) {
+					if (in_array($prevTok[0], array(T_STRING, T_VARIABLE))) {
+						continue;
+					}
+					if (in_array($prevTok[1], array(']', '}'))) {
+						continue;
+					}
+				}
 				$this->msgs[] = array(
 					'type' => substr($toks[ $i ][1], 0,  1),
 					'msg'  => substr($toks[ $i ][1], 1, -1),
