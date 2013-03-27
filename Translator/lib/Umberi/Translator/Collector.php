@@ -209,6 +209,17 @@ final class Collector {
 			if ($toks[ $i ][0] == T_STRING ? $nextTok[1] != '(' : $nextTok[1] != ')') {
 				continue;
 			}
+			$i++;
+			if ($toks[ $i ][0] == T_STRING) {
+				$nextTok = $getNextTok($i);
+				if (empty($nextTok)) {
+					break;
+				}
+				if ($nextTok[1] == ')') {
+					$i++;
+					continue;
+				}
+			}
 
 			/**
 			 * Lorem Ipsum 
@@ -218,7 +229,6 @@ final class Collector {
 			$prevTok = $getPrevTok($i);
 
 			if ($toks[ $i ][0] == T_CONSTANT_ENCAPSED_STRING) {
-				$i++;
 				if (empty($prevTok) || $prevTok[1] != '(') {
 					continue;
 				}
@@ -234,6 +244,49 @@ final class Collector {
 			/**
 			 * Lorem Ipsum
 			 *
+			 * @var int
+			 */
+			$type = self::TYPE_FUNCTION;
+
+			if (!empty($prevTok)) {
+				if ($prevTok[0] == T_NEW) {
+					continue;
+				} elseif ($prevTok[0] == T_OBJECT_OPERATOR) {
+					$type = self::TYPE_METHOD;
+				} elseif ($prevTok[0] == T_DOUBLE_COLON) {
+					$type = self::TYPE_STATIC_METHOD;
+				} elseif ($prevTok[0] == T_NS_SEPARATOR) {
+					/**
+					 * Lorem Ipsum
+					 *
+					 * @var int
+					 */
+					$j = 1;
+
+					do {
+						/**
+						 * Lorem Ipsum
+						 *
+						 * @var array
+						 */
+						$pTok = $getPrevTok($i - 1, true, $j++);
+
+						if (empty($pTok)) {
+							break;
+						}
+						if ($pTok[0] == T_NEW) {
+							continue 2;
+						}
+						if ($pTok[0] != T_STRING && $pTok[0] != T_NS_SEPARATOR) {
+							break;
+						}
+					} while (true);
+				}
+			}
+
+			/**
+			 * Lorem Ipsum
+			 *
 			 * @var bool
 			 */
 			$continue = false;
@@ -243,20 +296,6 @@ final class Collector {
 			 *   Lorem Ipsum
 			 */
 			foreach ($this->funcs as $func) {
-				/**
-				 * Lorem Ipsum
-				 *
-				 * @var int
-				 */
-				$type = self::TYPE_FUNCTION;
-
-				if (!empty($prevTok)) {
-					if ($prevTok[0] == T_OBJECT_OPERATOR) {
-						$type = self::TYPE_METHOD;
-					} elseif ($prevTok[0] == T_DOUBLE_COLON) {
-						$type = self::TYPE_STATIC_METHOD;
-					}
-				}
 				if ($type & $func['type'] && preg_match("~^{$func['name']}$~ADi", $toks[ $i ][1])) {
 					$continue = true;
 
@@ -270,16 +309,7 @@ final class Collector {
 					break;
 				}
 			}
-			$i++;
 			if (!$continue) {
-				continue;
-			}
-			$nextTok = $getNextTok($i);
-			if (empty($nextTok)) {
-				break;
-			}
-			if ($nextTok[1] == ')') {
-				$i++;
 				continue;
 			}
 
